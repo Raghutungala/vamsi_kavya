@@ -333,7 +333,281 @@
             background: rgba(244, 172, 183, 0.35);
             border-radius: 99px;
         }
-    </style>
+    
+/* =========================================================
+   FINAL SCREEN — BOUNCING LOVE EMBLEM
+   ========================================================= */
+.love-orbit {
+    width: 112px;
+    height: 112px;
+    position: relative;
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    isolation: isolate;
+    background:
+        radial-gradient(circle at 34% 24%, rgba(255,255,255,.24), transparent 42%),
+        linear-gradient(145deg, rgba(244,172,183,.25), rgba(139,30,63,.22));
+    border: 1px solid rgba(255,210,220,.48);
+    box-shadow:
+        0 0 25px rgba(244,172,183,.25),
+        inset 0 0 22px rgba(255,255,255,.09);
+    animation: loveOrbFloat 3s ease-in-out infinite;
+}
+.love-symbol {
+    position: absolute;
+    display: inline-block;
+    line-height: 1;
+    user-select: none;
+    filter: drop-shadow(0 4px 9px rgba(244,172,183,.45));
+    will-change: transform;
+}
+.love-heart {
+    z-index: 2;
+    font-size: 38px;
+    animation: loveBounce 1.35s ease-in-out infinite;
+}
+.love-infinity {
+    z-index: 1;
+    left: 7px;
+    top: 14px;
+    font-size: 25px;
+    animation: loveBounce 1.6s ease-in-out infinite .2s;
+}
+.love-spark {
+    z-index: 1;
+    right: 7px;
+    bottom: 14px;
+    font-size: 24px;
+    animation: loveBounce 1.45s ease-in-out infinite .43s;
+}
+.love-orbit-glow {
+    position: absolute;
+    inset: -7px;
+    border: 1px solid rgba(244,172,183,.38);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: lovePulse 2.4s ease-out infinite;
+}
+@keyframes loveBounce {
+    0%, 100% { transform: translateY(0) scale(1) rotate(-5deg); }
+    35% { transform: translateY(-11px) scale(1.16) rotate(5deg); }
+    65% { transform: translateY(2px) scale(.96) rotate(-2deg); }
+}
+@keyframes loveOrbFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
+@keyframes lovePulse {
+    0% { transform: scale(.92); opacity: .8; }
+    100% { transform: scale(1.35); opacity: 0; }
+}
+
+/* Heart particles emitted when Kavya taps the final button */
+.love-burst-particle {
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    pointer-events: none;
+    font-size: var(--particle-size, 20px);
+    line-height: 1;
+    transform: translate(-50%, -50%);
+    animation: loveBurstFly var(--particle-duration, 1.35s) cubic-bezier(.16,.75,.3,1) forwards;
+    filter: drop-shadow(0 3px 8px rgba(244,172,183,.55));
+}
+@keyframes loveBurstFly {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(.35) rotate(0deg);
+    }
+    12% { opacity: 1; }
+    72% { opacity: .95; }
+    100% {
+        opacity: 0;
+        transform:
+            translate(calc(-50% + var(--travel-x)), calc(-50% + var(--travel-y)))
+            scale(var(--particle-scale, 1.15))
+            rotate(var(--particle-rotate, 25deg));
+    }
+}
+.love-orbit.love-celebration .love-heart { animation: loveBurstPop .72s cubic-bezier(.2,1.5,.4,1); }
+.love-orbit.love-celebration .love-infinity { animation: loveBurstPop .78s .06s cubic-bezier(.2,1.5,.4,1); }
+.love-orbit.love-celebration .love-spark { animation: loveBurstPop .82s .12s cubic-bezier(.2,1.5,.4,1); }
+@keyframes loveBurstPop {
+    0% { transform: translateY(0) scale(1); }
+    45% { transform: translateY(-17px) scale(1.7) rotate(14deg); }
+    100% { transform: translateY(0) scale(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+    .love-orbit, .love-symbol, .love-orbit-glow { animation: none !important; }
+    .love-burst-particle { animation-duration: .01ms !important; }
+}
+
+
+/* Screen 3: elegant curved connections between tapped lanterns */
+.rose-golden-thread {
+    opacity: 0;
+    filter: drop-shadow(0 0 3px rgba(243,198,143,.55));
+    animation: roseThreadDraw .9s cubic-bezier(.2,.75,.25,1) forwards;
+}
+@keyframes roseThreadDraw {
+    from { opacity: 0; stroke-dashoffset: 38; }
+    to { opacity: .82; stroke-dashoffset: 0; }
+}
+
+/* Final screen: cinematic small-to-large heart reveal, not a repetitive bounce */
+.love-orbit {
+    width: 126px;
+    height: 126px;
+    overflow: visible;
+    animation: none;
+}
+.love-heart {
+    z-index: 3;
+    font-size: 58px;
+    transform-origin: center;
+    animation: cinematicHeartReveal 1.65s cubic-bezier(.16,1,.3,1) both;
+    filter:
+        drop-shadow(0 0 8px rgba(255,105,145,.75))
+        drop-shadow(0 0 24px rgba(244,172,183,.55));
+}
+.love-infinity {
+    left: 9px;
+    top: 19px;
+    font-size: 25px;
+    opacity: 0;
+    animation: cinematicSideReveal .9s 1s cubic-bezier(.16,1,.3,1) forwards;
+}
+.love-spark {
+    right: 9px;
+    bottom: 19px;
+    font-size: 24px;
+    opacity: 0;
+    animation: cinematicSideReveal .9s 1.2s cubic-bezier(.16,1,.3,1) forwards;
+}
+.love-orbit-glow {
+    animation: cinematicHalo 2.4s 1s ease-out infinite;
+}
+.love-orbit-glint {
+    position: absolute;
+    inset: 13px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,230,238,.38);
+    opacity: 0;
+    animation: glintReveal 1.2s .5s ease-out forwards;
+    pointer-events: none;
+}
+@keyframes cinematicHeartReveal {
+    0% { opacity: 0; transform: scale(.08) rotate(-24deg); filter: blur(8px); }
+    42% { opacity: 1; transform: scale(1.34) rotate(7deg); filter: blur(0); }
+    66% { transform: scale(.91) rotate(-3deg); }
+    82% { transform: scale(1.08) rotate(1deg); }
+    100% { opacity: 1; transform: scale(1) rotate(0); }
+}
+@keyframes cinematicSideReveal {
+    0% { opacity: 0; transform: scale(.1) translateY(12px); filter: blur(5px); }
+    65% { opacity: 1; transform: scale(1.22) translateY(-3px); filter: blur(0); }
+    100% { opacity: .95; transform: scale(1) translateY(0); }
+}
+@keyframes cinematicHalo {
+    0% { transform: scale(.88); opacity: .7; }
+    100% { transform: scale(1.42); opacity: 0; }
+}
+@keyframes glintReveal {
+    0% { opacity: 0; transform: scale(.6) rotate(-35deg); }
+    50% { opacity: .8; }
+    100% { opacity: .25; transform: scale(1.12) rotate(0); }
+}
+.love-orbit.love-celebration .love-heart {
+    animation: cinematicHeartReveal .95s cubic-bezier(.16,1,.3,1) both;
+}
+.love-orbit.love-celebration .love-infinity {
+    animation: cinematicSideReveal .8s .22s cubic-bezier(.16,1,.3,1) both;
+}
+.love-orbit.love-celebration .love-spark {
+    animation: cinematicSideReveal .8s .38s cubic-bezier(.16,1,.3,1) both;
+}
+@media (prefers-reduced-motion: reduce) {
+    .rose-golden-thread, .love-heart, .love-infinity, .love-spark,
+    .love-orbit-glow, .love-orbit-glint { animation: none !important; opacity: 1; }
+}
+
+
+/* Birthday wish heading accent: small jewel-like heart instead of sparkle */
+.wish-love-mark{
+    display:inline-block;
+    margin-left:.16em;
+    vertical-align:.12em;
+    font-family:Georgia,serif;
+    font-size:.72em;
+    line-height:1;
+    color:#f4acb7;
+    text-shadow:0 0 7px rgba(244,172,183,.75),0 0 18px rgba(243,198,143,.45);
+    animation:wishHeartBeat 1.25s ease-in-out infinite;
+}
+@keyframes wishHeartBeat{
+    0%,100%{transform:scale(1)}
+    12%{transform:scale(1.22)}
+    23%{transform:scale(.96)}
+    36%{transform:scale(1.28)}
+    52%{transform:scale(1)}
+}
+
+/* One single heart: cinematic entrance followed by a classic double heartbeat */
+#loveOrbit .love-heart{
+    left:50%;
+    top:50%;
+    z-index:3;
+    font-family:Georgia,"Times New Roman",serif;
+    font-size:76px;
+    line-height:1;
+    color:#f4acb7;
+    background:linear-gradient(145deg,#fff0e8 4%,#f7b4c1 38%,#e66b8d 72%,#f3c68f 100%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    -webkit-text-fill-color:transparent;
+    filter:drop-shadow(0 0 7px rgba(255,150,177,.55)) drop-shadow(0 0 22px rgba(244,172,183,.45));
+    transform-origin:center;
+    animation:singleHeartIntro 1.45s cubic-bezier(.16,1,.3,1) both,
+              singleHeartBeat 1.25s 1.45s ease-in-out infinite;
+}
+#loveOrbit .love-orbit-glow{
+    inset:-9px;
+    border-color:rgba(244,172,183,.48);
+    animation:cinematicHalo 2.2s 1.1s ease-out infinite;
+}
+@keyframes singleHeartIntro{
+    0%{opacity:0;transform:translate(-50%,-50%) scale(.04) rotate(-28deg);filter:blur(9px)}
+    42%{opacity:1;transform:translate(-50%,-50%) scale(1.42) rotate(8deg);filter:blur(0) drop-shadow(0 0 20px rgba(255,150,177,.8))}
+    64%{transform:translate(-50%,-50%) scale(.88) rotate(-4deg)}
+    82%{transform:translate(-50%,-50%) scale(1.12) rotate(2deg)}
+    100%{opacity:1;transform:translate(-50%,-50%) scale(1) rotate(0)}
+}
+@keyframes singleHeartBeat{
+    0%,100%{transform:translate(-50%,-50%) scale(1)}
+    10%{transform:translate(-50%,-50%) scale(1.16)}
+    20%{transform:translate(-50%,-50%) scale(.96)}
+    32%{transform:translate(-50%,-50%) scale(1.23)}
+    48%{transform:translate(-50%,-50%) scale(1)}
+}
+#loveOrbit.love-celebration .love-heart{
+    animation:singleHeartBurst 1.05s cubic-bezier(.16,1,.3,1) both,
+              singleHeartBeat 1.25s 1.05s ease-in-out infinite;
+}
+@keyframes singleHeartBurst{
+    0%{transform:translate(-50%,-50%) scale(.35);filter:blur(5px)}
+    48%{transform:translate(-50%,-50%) scale(1.55);filter:blur(0) drop-shadow(0 0 25px rgba(255,150,177,.9))}
+    72%{transform:translate(-50%,-50%) scale(.9)}
+    100%{transform:translate(-50%,-50%) scale(1)}
+}
+@media(prefers-reduced-motion:reduce){
+    .wish-love-mark,#loveOrbit .love-heart{animation:none!important}
+}
+
+</style>
 </head>
 
 <body>
@@ -345,7 +619,7 @@
     <script>
         const VAMSI_CONFIG = {
             herName: "Vamsi",
-            yourSignOff: "With all my love, Kavya",
+            yourSignOff: "With all my heart, Kavya",
 
             // Screen 2: 4 Tappable Polaroid Observation Cards
             polaroids: [
@@ -754,9 +1028,9 @@
         ============================================================== -->
         <section id="screen-6" class="screen-stage screen-hidden items-center text-center">
             <div class="my-auto w-full flex flex-col items-center">
-                <div
-                    class="w-16 h-16 rounded-full velvet-glass border border-roseblush/40 flex items-center justify-center mb-4 shadow-[0_0_30px_rgba(244,172,183,0.3)]">
-                    <span class="text-2xl">🌹</span>
+                <div class="love-orbit mb-4" id="loveOrbit" aria-label="A cinematic heart reveal">
+                    <span class="love-symbol love-heart" aria-hidden="true">♥</span>
+                    <span class="love-orbit-glow" aria-hidden="true"></span>
                 </div>
 
                 <span class="text-[10px] uppercase tracking-[0.25em] text-roseblush/80 mb-1">
@@ -784,7 +1058,7 @@
 
                 <div id="smileFeedbackToast"
                     class="hidden px-4 py-2.5 rounded-2xl bg-roseblush/15 border border-roseblush/40 text-xs text-petal max-w-[300px] mb-3">
-                    ✨ I hope this little surprise made you smile. Happy Birthday, Vamsi! I love you.
+                    ❤️ I hope this little surprise made you smile. Happy Birthday, Vamsi! My Heart.
                 </div>
 
                 <div class="flex items-center gap-4 mt-1">
@@ -1270,16 +1544,39 @@
 
         function drawGoldenThread(x1, y1, x2, y2) {
             const svg = document.getElementById('roseLinesSvg');
-            const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-            line.setAttribute('x1', `${x1}%`);
-            line.setAttribute('y1', `${y1}%`);
-            line.setAttribute('x2', `${x2}%`);
-            line.setAttribute('y2', `${y2}%`);
-            line.setAttribute('stroke', '#F3C68F');
-            line.setAttribute('stroke-width', '1.5');
-            line.setAttribute('stroke-dasharray', '4,4');
-            line.setAttribute('class', 'opacity-70');
-            svg.appendChild(line);
+            const box = document.getElementById('roseGardenBox');
+            if (!svg || !box) return;
+
+            const width = box.clientWidth;
+            const height = box.clientHeight;
+            svg.setAttribute('viewBox', `0 0 ${width} ${height}`);
+            svg.setAttribute('preserveAspectRatio', 'none');
+
+            // Convert the lantern percentage positions to the SVG's pixel space.
+            const ax = width * x1 / 100;
+            const ay = height * y1 / 100;
+            const bx = width * x2 / 100;
+            const by = height * y2 / 100;
+
+            // Bend each thread away from the direct line so it does not cut
+            // through the central lantern or visually join unrelated nodes.
+            const dx = bx - ax;
+            const dy = by - ay;
+            const length = Math.max(1, Math.hypot(dx, dy));
+            const bend = Math.min(28, length * 0.22);
+            const direction = orderedRoses.length % 2 === 0 ? 1 : -1;
+            const cx = (ax + bx) / 2 + (-dy / length) * bend * direction;
+            const cy = (ay + by) / 2 + (dx / length) * bend * direction;
+
+            const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            path.setAttribute('d', `M ${ax} ${ay} Q ${cx} ${cy} ${bx} ${by}`);
+            path.setAttribute('fill', 'none');
+            path.setAttribute('stroke', '#F3C68F');
+            path.setAttribute('stroke-width', '1.6');
+            path.setAttribute('stroke-linecap', 'round');
+            path.setAttribute('stroke-dasharray', '2 6');
+            path.setAttribute('class', 'rose-golden-thread');
+            svg.appendChild(path);
         }
 
         /* -----------------------------------------------------------
@@ -1307,7 +1604,7 @@
             halo.style.opacity = '0.15';
             smoke.classList.add('smoke-go');
 
-            document.getElementById('wishHeader').innerHTML = `Happy Birthday, <span class="her-name">${VAMSI_CONFIG.herName}</span> ✨`;
+            document.getElementById('wishHeader').innerHTML = `Happy Birthday, <span class="her-name">${VAMSI_CONFIG.herName}</span><span class="wish-love-mark" aria-label="love">♥</span>`;
             document.getElementById('wishSubtext').textContent = "I hope every silent wish you just made comes true effortlessly this year.";
             document.getElementById('micBlowBtn').classList.add('hidden');
 
@@ -1382,7 +1679,35 @@
 
         function sendHeartBurst() {
             playRomanticChord();
-            showerRosePetals();
+
+            // Restart the emblem's pop animation on every tap.
+            const orbit = document.getElementById('loveOrbit');
+            if (orbit) {
+                orbit.classList.remove('love-celebration');
+                void orbit.offsetWidth;
+                orbit.classList.add('love-celebration');
+                window.setTimeout(() => orbit.classList.remove('love-celebration'), 950);
+
+                // Scatter floating hearts and love symbols from the emblem.
+                const rect = orbit.getBoundingClientRect();
+                const symbols = ['♥', '♥', '❤', '♡'];
+                for (let i = 0; i < 24; i++) {
+                    const particle = document.createElement('span');
+                    particle.className = 'love-burst-particle';
+                    particle.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+                    particle.style.left = (rect.left + rect.width / 2) + 'px';
+                    particle.style.top = (rect.top + rect.height / 2) + 'px';
+                    particle.style.setProperty('--travel-x', (Math.random() * 300 - 150) + 'px');
+                    particle.style.setProperty('--travel-y', (-70 - Math.random() * 230) + 'px');
+                    particle.style.setProperty('--particle-size', (14 + Math.random() * 17) + 'px');
+                    particle.style.setProperty('--particle-duration', (1.05 + Math.random() * .75) + 's');
+                    particle.style.setProperty('--particle-scale', (.75 + Math.random() * .8).toFixed(2));
+                    particle.style.setProperty('--particle-rotate', (Math.random() * 100 - 50) + 'deg');
+                    document.body.appendChild(particle);
+                    particle.addEventListener('animationend', () => particle.remove(), { once: true });
+                }
+            }
+
             document.getElementById('smileFeedbackToast').classList.remove('hidden');
             const btn = document.getElementById('keepSmileBtn');
             btn.textContent = "Smile Saved Forever ♥";
