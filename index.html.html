@@ -1,0 +1,1474 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>For Vamsi • Happy Birthday</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Caveat:wght@500;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        wine: '#120509',
+                        velvet: '#1F0910',
+                        crimson: '#8B1E3F',
+                        roseblush: '#F4ACB7',
+                        petal: '#FFE5EC',
+                        candle: '#F3C68F',
+                        goldlight: '#FFF3E0'
+                    },
+                    fontFamily: {
+                        serif: ['"Cormorant Garamond"', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        hand: ['"Caveat"', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        * {
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            -webkit-user-select: none;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100dvh;
+            overflow: hidden;
+            background-color: #090204;
+            color: #FFE5EC;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        /* Desktop Phone Frame Wrapper */
+        .app-shell {
+            width: 100%;
+            max-width: 430px;
+            height: 100dvh;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+            background: radial-gradient(circle at 50% 15%, #2D0C16 0%, #16060B 55%, #0D0306 100%);
+            box-shadow: 0 0 65px rgba(139, 30, 63, 0.35);
+        }
+
+        @media (min-width: 460px) {
+            body {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: radial-gradient(circle at center, #1c070e 0%, #060103 100%);
+            }
+
+            .app-shell {
+                height: min(94dvh, 860px);
+                border-radius: 42px;
+                border: 6px solid rgba(244, 172, 183, 0.18);
+                box-shadow: 0 25px 80px rgba(0, 0, 0, 0.85), 0 0 45px rgba(244, 172, 183, 0.15);
+            }
+        }
+
+        /* Romantic Velvet Glassmorphism */
+        .velvet-glass {
+            background: rgba(34, 10, 18, 0.68);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(244, 172, 183, 0.22);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.55), inset 0 1px 15px rgba(255, 229, 236, 0.06);
+        }
+
+        .rose-gradient-text {
+            background: linear-gradient(135deg, #FFF5F7 0%, #F4ACB7 45%, #F3C68F 85%, #FFF5F7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: shimmer 6s linear infinite;
+        }
+
+        @keyframes shimmer {
+            to {
+                background-position: 200% center;
+            }
+        }
+
+        /* Screen Transitions */
+        .screen-stage {
+            position: absolute;
+            inset: 0;
+            padding: 4.2rem 1.25rem 1.5rem 1.25rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1), transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+            z-index: 10;
+        }
+
+        .screen-hidden {
+            opacity: 0;
+            transform: translateY(28px) scale(0.96);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .screen-active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+            z-index: 20;
+        }
+
+        /* Screen 1: Heartbeat Lock */
+        @keyframes lub-dub {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            15% {
+                transform: scale(1.12);
+            }
+
+            30% {
+                transform: scale(0.98);
+            }
+
+            45% {
+                transform: scale(1.08);
+            }
+
+            70% {
+                transform: scale(1);
+            }
+        }
+
+        .heartbeat-idle {
+            animation: lub-dub 2s infinite ease-in-out;
+        }
+
+        .heartbeat-holding {
+            animation: lub-dub 0.85s infinite ease-in-out;
+            filter: drop-shadow(0 0 28px rgba(244, 172, 183, 0.85));
+        }
+
+        .pulse-ring {
+            position: absolute;
+            inset: -12px;
+            border-radius: 9999px;
+            border: 1.5px solid rgba(244, 172, 183, 0.45);
+            animation: ring-expand 2.2s infinite ease-out;
+            pointer-events: none;
+        }
+
+        .pulse-ring-2 {
+            animation-delay: 0.7s;
+        }
+
+        @keyframes ring-expand {
+            0% {
+                transform: scale(0.88);
+                opacity: 0.85;
+            }
+
+            100% {
+                transform: scale(1.65);
+                opacity: 0;
+            }
+        }
+
+        /* Screen 2: Polaroid Stack */
+        .polaroid-card {
+            position: absolute;
+            width: 100%;
+            left: 0;
+            top: 0;
+            transition: transform 0.65s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.55s ease;
+            transform-origin: center bottom;
+            will-change: transform, opacity;
+        }
+
+        .polaroid-dismissed-left {
+            transform: translateX(-125%) rotate(-16deg) scale(0.9) !important;
+            opacity: 0 !important;
+            pointer-events: none;
+        }
+
+        .polaroid-dismissed-right {
+            transform: translateX(125%) rotate(16deg) scale(0.9) !important;
+            opacity: 0 !important;
+            pointer-events: none;
+        }
+
+        /* Screen 3: Glowing Rose Lanterns */
+        .rose-lantern {
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation: float-slow 3.6s infinite ease-in-out alternate;
+        }
+
+        .rose-lantern.bloomed {
+            transform: scale(1.22);
+            filter: drop-shadow(0 0 18px #F4ACB7) drop-shadow(0 0 30px #F3C68F);
+        }
+
+        @keyframes float-slow {
+            0% {
+                transform: translateY(0px);
+            }
+
+            100% {
+                transform: translateY(-8px);
+            }
+        }
+
+        /* Screen 4: Realistic Candle Flame */
+        .flame-wrapper {
+            cursor: pointer;
+            position: relative;
+            width: 60px;
+            height: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            touch-action: none;
+        }
+
+        .candle-flame {
+            width: 24px;
+            height: 52px;
+            background: radial-gradient(ellipse at bottom, #ffffff 12%, #ffe599 45%, #f59e0b 78%, transparent 100%);
+            border-radius: 50% 50% 35% 35% / 60% 60% 40% 40%;
+            box-shadow:
+                0 0 22px 8px rgba(243, 198, 143, 0.75),
+                0 0 60px 22px rgba(244, 172, 183, 0.45),
+                0 -12px 30px 5px rgba(255, 220, 150, 0.6);
+            transform-origin: bottom center;
+            animation: flame-dance 2s infinite ease-in-out alternate;
+            transition: all 0.45s ease;
+        }
+
+        @keyframes flame-dance {
+            0% {
+                transform: scale(1) rotate(-2deg);
+            }
+
+            35% {
+                transform: scale(1.06, 0.95) rotate(2.5deg);
+            }
+
+            70% {
+                transform: scale(0.95, 1.06) rotate(-1.5deg);
+            }
+
+            100% {
+                transform: scale(1.03, 1.02) rotate(2deg);
+            }
+        }
+
+        .smoke-trail {
+            position: absolute;
+            bottom: 12px;
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: rgba(255, 229, 236, 0.55);
+            filter: blur(4px);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .smoke-go .s1 {
+            animation: rise-smoke 2.2s ease-out forwards;
+        }
+
+        .smoke-go .s2 {
+            animation: rise-smoke 2.6s ease-out 0.2s forwards;
+        }
+
+        @keyframes rise-smoke {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 0.85;
+            }
+
+            100% {
+                transform: translateY(-90px) scale(4.2) translateX(14px);
+                opacity: 0;
+            }
+        }
+
+        /* Custom Scrollbar for Letter */
+        .letter-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .letter-scroll::-webkit-scrollbar-track {
+            background: rgba(255, 229, 236, 0.04);
+        }
+
+        .letter-scroll::-webkit-scrollbar-thumb {
+            background: rgba(244, 172, 183, 0.35);
+            border-radius: 99px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =================================================================
+         VAMSI'S PERSONALIZED CONFIGURATION
+         You can tweak any line or sign-off name right here!
+    ================================================================== -->
+    <script>
+        const VAMSI_CONFIG = {
+            herName: "Vamsi",
+            yourSignOff: "With all my love, Kavya",
+
+            // Screen 2: 4 Tappable Polaroid Observation Cards
+            polaroids: [
+                {
+                    tag: "01 / OUR STORY",
+                    caption: "Four Years, Countless Memories",
+                    body: "Four years ago, something beautiful began between us. Since then, every little conversation, every laugh, and every moment together has become a memory I hold close."
+                },
+                {
+                    tag: "02 / THE LITTLE THINGS",
+                    caption: "Still My Favourite Person",
+                    body: "Even after all this time, you still make ordinary days feel special. Your smile, your voice, and the little things that make you uniquely you never get old."
+                },
+                {
+                    tag: "03 / GROWING TOGETHER",
+                    caption: "Side by Side",
+                    body: "We have shared changes, challenges, silly moments, and countless conversations. I love that we keep learning about each other and choosing to grow together."
+                },
+                {
+                    tag: "04 / ALWAYS YOU",
+                    caption: "A Little Something From Me",
+                    body: "I made this little surprise to remind you how loved you are. Four years is a beautiful chapter, and I cannot wait to see all the memories still waiting for us."
+                }
+            ],
+
+            // Screen 3: 5 Floating Rose Lanterns (x, y in percentages)
+            roses: [
+                {
+                    id: 1, x: 22, y: 26,
+                    title: "Your Unfiltered Smile",
+                    note: "Your laugh is still one of my favourite sounds. You have a way of making even an ordinary day feel lighter."
+                },
+                {
+                    id: 2, x: 76, y: 22,
+                    title: "Your Honest Heart",
+                    note: "I love how real you are with me. Your honesty makes our bond stronger, and I never take that trust for granted."
+                },
+                {
+                    id: 3, x: 50, y: 48,
+                    title: "The Way You Care",
+                    note: "The way you care, remember the little things, and make people feel seen is one of the many reasons I fell for you."
+                },
+                {
+                    id: 4, x: 24, y: 74,
+                    title: "Your Strength",
+                    note: "I am proud of the person you are and the person you are becoming. I will always be in your corner, cheering you on."
+                },
+                {
+                    id: 5, x: 76, y: 72,
+                    title: "Just Being Vamsi",
+                    note: "You never had to do anything extraordinary to be special to me. Being you has always been more than enough."
+                }
+            ],
+
+            // Screen 5: Handwritten-Style Heartfelt Confession Letter
+            letterGreeting: "Hey Vamsi,",
+            letterParagraphs: [
+                "Happy Birthday, my Vamsi. Four years ago, we began a story that has become one of the most beautiful parts of my life. Today, I just want to celebrate you and everything you mean to me.",
+                "Over these four years, we have shared so many little moments that mean the world to me—our conversations, laughter, memories, and the comfort of knowing we have each other. Every chapter has made my love for you grow.",
+                "I love you for who you are: your kindness, your strength, your silly side, your dreams, and all the little things that make you Vamsi. I do not need perfect days with you; I just treasure the real ones we share.",
+                "Whatever the coming years bring, I want us to keep choosing each other, supporting each other, and making more memories together. May life bring you every happiness you deserve. I will be right here, cheering for you.",
+                "Happy Birthday, Vamsi. Thank you for these four beautiful years. Here is to many more chapters, adventures, and reasons to smile. I love you. — Kavya"
+            ]
+        };
+    </script>
+
+    <!-- =================================================================
+         MOBILE SMARTPHONE SHELL (430px Max on Desktop, 100% on Phone)
+    ================================================================== -->
+    <div class="app-shell">
+
+        <!-- Background Floating Heart Embers & Bokeh Canvas -->
+        <canvas id="emberCanvas" class="absolute inset-0 w-full h-full pointer-events-none z-0"></canvas>
+
+        <!-- Ambient Radial Glow -->
+        <div
+            class="absolute inset-0 bg-[radial-gradient(circle_at_50%_85%,rgba(244,172,183,0.12),transparent_65%)] pointer-events-none z-0">
+        </div>
+
+        <!-- =============================================================
+             TOP STORY BAR & FLOATING AUDIO PILL
+        ============================================================== -->
+        <header
+            class="absolute top-0 left-0 right-0 z-40 px-4 pt-3 pb-2 flex flex-col gap-2.5 bg-gradient-to-b from-black/60 to-transparent">
+            <!-- Instagram-Story Style 6-Segment Progress Bar -->
+            <div class="grid grid-cols-6 gap-1.5 w-full">
+                <button onclick="jumpStageIfUnlocked(1)" class="h-1 rounded-full bg-white/20 overflow-hidden">
+                    <div id="bar-1" class="h-full bg-roseblush w-full transition-all duration-500"></div>
+                </button>
+                <button onclick="jumpStageIfUnlocked(2)" class="h-1 rounded-full bg-white/20 overflow-hidden">
+                    <div id="bar-2" class="h-full bg-roseblush w-0 transition-all duration-500"></div>
+                </button>
+                <button onclick="jumpStageIfUnlocked(3)" class="h-1 rounded-full bg-white/20 overflow-hidden">
+                    <div id="bar-3" class="h-full bg-roseblush w-0 transition-all duration-500"></div>
+                </button>
+                <button onclick="jumpStageIfUnlocked(4)" class="h-1 rounded-full bg-white/20 overflow-hidden">
+                    <div id="bar-4" class="h-full bg-roseblush w-0 transition-all duration-500"></div>
+                </button>
+                <button onclick="jumpStageIfUnlocked(5)" class="h-1 rounded-full bg-white/20 overflow-hidden">
+                    <div id="bar-5" class="h-full bg-roseblush w-0 transition-all duration-500"></div>
+                </button>
+                <button onclick="jumpStageIfUnlocked(6)" class="h-1 rounded-full bg-white/20 overflow-hidden">
+                    <div id="bar-6" class="h-full bg-roseblush w-0 transition-all duration-500"></div>
+                </button>
+            </div>
+
+            <!-- Sub-Header: Name & Audio Control -->
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-roseblush animate-pulse"></span>
+                    <span class="text-[11px] uppercase tracking-[0.22em] text-petal/80 font-medium">
+                        For <span class="her-name">Vamsi</span>
+                    </span>
+                </div>
+
+                <button id="audioPill" onclick="toggleRomanticPiano()"
+                    class="velvet-glass px-3 py-1 rounded-full flex items-center gap-1.5 text-[11px] tracking-wider text-petal/90 active:scale-95 transition-transform">
+                    <span id="audioEmoji">🔇</span>
+                    <span id="audioLabel">Melody Off</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- =============================================================
+             SCREEN 1: "A LOVE NOTE FOR VAMSI" (HEARTBEAT LOCK)
+        ============================================================== -->
+        <section id="screen-1" class="screen-stage screen-active items-center text-center">
+            <div class="mt-4">
+                <span
+                    class="inline-block px-3 py-1 rounded-full border border-roseblush/30 bg-roseblush/10 text-roseblush text-[10px] uppercase tracking-[0.25em] mb-3">
+                    Birthday Keepsake • Private
+                </span>
+                <h1 class="font-serif text-4xl sm:text-5xl rose-gradient-text font-semibold leading-tight">
+                    Hey <span class="her-name">Vamsi</span>,
+                </h1>
+                <p class="text-petal/75 text-xs sm:text-sm font-light max-w-[290px] mx-auto mt-2 leading-relaxed">
+                    Some feelings stay quiet, respectful, and real even when time passes. I made this little space just
+                    for your birthday today.
+                </p>
+            </div>
+
+            <!-- Interactive Press & Hold Heart Lock -->
+            <div class="relative flex flex-col items-center justify-center my-auto">
+                <div class="relative w-40 h-40 flex items-center justify-center">
+                    <!-- Expanding Pulse Rings -->
+                    <div class="pulse-ring"></div>
+                    <div class="pulse-ring pulse-ring-2"></div>
+
+                    <!-- Circular SVG Hold Progress Ring -->
+                    <svg class="absolute inset-0 w-full h-full -rotate-90 pointer-events-none" viewBox="0 0 120 120">
+                        <circle cx="60" cy="60" r="54" fill="none" stroke="rgba(244, 172, 183, 0.15)"
+                            stroke-width="3" />
+                        <circle id="holdProgressCircle" cx="60" cy="60" r="54" fill="none" stroke="#F4ACB7"
+                            stroke-width="3.5" stroke-linecap="round" stroke-dasharray="339.29"
+                            stroke-dashoffset="339.29" class="transition-all duration-75" />
+                    </svg>
+
+                    <!-- Tactile Glass Heart Button -->
+                    <button id="heartHoldBtn" aria-label="Press and hold to unlock"
+                        class="heartbeat-idle relative z-20 w-28 h-28 rounded-full velvet-glass flex flex-col items-center justify-center border border-roseblush/40 shadow-[0_0_35px_rgba(244,172,183,0.25)] focus:outline-none">
+                        <svg class="w-12 h-12 text-roseblush drop-shadow-[0_0_12px_rgba(244,172,183,0.8)]"
+                            viewBox="0 0 24 24" fill="currentColor">
+                            <path
+                                d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                        </svg>
+                        <span id="holdPercentText"
+                            class="text-[10px] tracking-[0.2em] uppercase text-petal/80 mt-1 font-medium">HOLD</span>
+                    </button>
+                </div>
+
+                <p id="holdStatusLabel"
+                    class="mt-6 text-xs uppercase tracking-[0.22em] text-roseblush/90 font-medium animate-pulse">
+                    Press & Hold the Heart for 2 Seconds
+                </p>
+                <p class="text-[11px] text-petal/50 mt-1">
+                    (Or double-tap if you're in a hurry)
+                </p>
+            </div>
+
+            <div class="w-full text-center pb-1">
+                <p class="text-[11px] text-petal/40 italic font-serif">
+                    Four years together, and still my favourite hello.
+                </p>
+            </div>
+        </section>
+
+        <!-- =============================================================
+             SCREEN 2: "THE LITTLE THINGS I LOVE ABOUT YOU" (POLAROID STACK)
+        ============================================================== -->
+        <section id="screen-2" class="screen-stage screen-hidden items-center text-center">
+            <div class="w-full">
+                <span
+                    class="inline-block px-3 py-0.5 rounded-full border border-roseblush/30 bg-roseblush/10 text-roseblush text-[10px] uppercase tracking-[0.22em] mb-1.5">
+                    01 • Four Years Together
+                </span>
+                <h2 class="font-serif text-3xl rose-gradient-text font-semibold">
+                    A Few Things I Love About You
+                </h2>
+                <p class="text-petal/70 text-xs font-light mt-1">
+                    Tap each note card to read & flip through (<span id="polaroidCounter"
+                        class="text-roseblush font-medium">1 / 4</span>)
+                </p>
+            </div>
+
+            <!-- Interactive Stacked Polaroid Container -->
+            <div class="relative w-full max-w-[340px] h-[340px] my-auto flex items-center justify-center">
+                <div id="polaroidStack" class="relative w-full h-full">
+                    <!-- Dynamically populated from VAMSI_CONFIG.polaroids -->
+                </div>
+            </div>
+
+            <!-- Bottom Controls -->
+            <div class="w-full flex flex-col items-center gap-2.5">
+                <button id="tapNextCardBtn" onclick="dismissTopPolaroid()"
+                    class="w-full max-w-[280px] py-3 rounded-full velvet-glass border border-roseblush/40 text-xs uppercase tracking-[0.2em] text-petal hover:bg-roseblush/15 active:scale-95 transition-all">
+                    Tap to Read Next Note →
+                </button>
+                <button id="screen2ContinueBtn" onclick="goToStage(3)"
+                    class="hidden w-full max-w-[280px] py-3.5 rounded-full bg-gradient-to-r from-roseblush via-candle to-roseblush text-wine font-semibold text-xs uppercase tracking-[0.2em] shadow-[0_0_25px_rgba(244,172,183,0.5)] active:scale-95 transition-all">
+                    See What I Love →
+                </button>
+            </div>
+        </section>
+
+        <!-- =============================================================
+             SCREEN 3: "REASONS I LOVE YOU" (5 BLOOMING ROSES)
+        ============================================================== -->
+        <section id="screen-3" class="screen-stage screen-hidden items-center text-center">
+            <div class="w-full">
+                <span
+                    class="inline-block px-3 py-0.5 rounded-full border border-roseblush/30 bg-roseblush/10 text-roseblush text-[10px] uppercase tracking-[0.22em] mb-1">
+                    02 • Five Things I Adore
+                </span>
+                <h2 class="font-serif text-3xl rose-gradient-text font-semibold">
+                    Why You Are So Special
+                </h2>
+                <p class="text-petal/70 text-xs font-light mt-0.5">
+                    Tap all <span class="text-roseblush font-medium">5 glowing rose lanterns</span> to bloom them (<span
+                        id="roseCountLabel">0/5</span>)
+                </p>
+            </div>
+
+            <!-- Interactive Rose Garden Canvas Box -->
+            <div id="roseGardenBox"
+                class="relative w-full h-[250px] velvet-glass rounded-3xl overflow-hidden my-2 border border-roseblush/30">
+                <!-- Ambient Golden Starlight Grid -->
+                <div
+                    class="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(243,198,143,0.12),transparent_70%)] pointer-events-none">
+                </div>
+                <svg id="roseLinesSvg" class="absolute inset-0 w-full h-full pointer-events-none z-10"></svg>
+                <div id="roseNodesLayer" class="absolute inset-0 w-full h-full z-20"></div>
+            </div>
+
+            <!-- Revealed Reason Card -->
+            <div id="roseMessageCard"
+                class="w-full min-h-[104px] velvet-glass rounded-2xl p-4 flex flex-col items-center justify-center text-center border border-roseblush/35 transition-all duration-300">
+                <h3 id="roseTitleSlot" class="font-serif text-lg text-candle font-semibold mb-1">
+                    Tap any glowing rosebud above 🌹
+                </h3>
+                <p id="roseNoteSlot" class="text-xs text-petal/85 font-light leading-relaxed">
+                    Each rose holds one of the many reasons I feel lucky to have you.
+                </p>
+            </div>
+
+            <button id="screen3ContinueBtn" onclick="goToStage(4)"
+                class="opacity-40 pointer-events-none w-full max-w-[280px] py-3.5 rounded-full bg-gradient-to-r from-roseblush via-candle to-roseblush text-wine font-semibold text-xs uppercase tracking-[0.2em] transition-all duration-500">
+                Bloom All 5 Roses First
+            </button>
+        </section>
+
+        <!-- =============================================================
+             SCREEN 4: "MAKE A BIRTHDAY WISH, VAMSI" (INTERACTIVE CAKE)
+        ============================================================== -->
+        <section id="screen-4" class="screen-stage screen-hidden items-center text-center">
+            <div class="w-full">
+                <span
+                    class="inline-block px-3 py-0.5 rounded-full border border-roseblush/30 bg-roseblush/10 text-roseblush text-[10px] uppercase tracking-[0.22em] mb-1.5">
+                    03 • Your Birthday Moment
+                </span>
+                <h2 id="wishHeader"
+                    class="font-serif text-3xl sm:text-4xl rose-gradient-text font-semibold leading-tight">
+                    Make a Wish, <span class="her-name">Vamsi</span>
+                </h2>
+                <p id="wishSubtext" class="text-petal/75 text-xs font-light mt-1 max-w-[300px] mx-auto leading-relaxed">
+                    Close your eyes for a second, make a wish for your life ahead, then <span
+                        class="text-candle font-medium underline">tap or swipe the flame</span> (or blow into your mic).
+                </p>
+            </div>
+
+            <!-- Interactive Tiered Velvet & Gold Birthday Cake -->
+            <div class="relative flex flex-col items-center justify-center my-auto pt-4 select-none">
+                <!-- Warm Candlelight Halo -->
+                <div id="candleLightHalo"
+                    class="absolute -top-6 w-64 h-64 rounded-full bg-[radial-gradient(circle,rgba(243,198,143,0.32)_0%,rgba(244,172,183,0.12)_45%,transparent_70%)] pointer-events-none transition-opacity duration-1000">
+                </div>
+
+                <!-- Touch/Swipe Flame Area -->
+                <div id="flameInteractiveZone" onclick="extinguishBirthdayCandle()" class="flame-wrapper z-30 -mb-1">
+                    <div id="theFlame" class="candle-flame"></div>
+                    <div id="smokeWrap" class="absolute inset-0 flex justify-center">
+                        <div class="smoke-trail s1"></div>
+                        <div class="smoke-trail s2"></div>
+                    </div>
+                </div>
+
+                <!-- Wick -->
+                <div class="w-[3px] h-2.5 bg-[#3d271d] z-20"></div>
+
+                <!-- Candle Stick -->
+                <div onclick="extinguishBirthdayCandle()"
+                    class="w-5 h-16 rounded-t-md bg-gradient-to-r from-[#f8e2cf] via-[#fff9f5] to-[#e3bfa0] border border-candle/60 shadow-lg z-20 cursor-pointer flex flex-col justify-around overflow-hidden">
+                    <div class="w-full h-1 bg-roseblush/70"></div>
+                    <div class="w-full h-1 bg-candle/80"></div>
+                    <div class="w-full h-1 bg-roseblush/70"></div>
+                </div>
+
+                <!-- Top Cake Layer -->
+                <div
+                    class="w-36 h-14 rounded-t-2xl bg-gradient-to-r from-[#380e1b] via-[#541629] to-[#380e1b] border-t-2 border-x border-candle/60 shadow-xl relative flex flex-col justify-between overflow-hidden z-10">
+                    <!-- Cream Drip -->
+                    <div class="w-full h-2.5 bg-gradient-to-r from-petal via-goldlight to-petal"></div>
+                    <div class="flex justify-around text-candle/80 text-xs">
+                        <span>♥</span><span>✦</span><span>♥</span>
+                    </div>
+                    <div class="w-full h-1 bg-candle/40"></div>
+                </div>
+
+                <!-- Bottom Cake Layer -->
+                <div
+                    class="w-52 h-20 rounded-t-2xl bg-gradient-to-r from-[#280913] via-[#3F101E] to-[#280913] border-t-2 border-x border-candle/70 shadow-2xl relative flex flex-col justify-between overflow-hidden z-10">
+                    <div class="w-full h-3 bg-gradient-to-r from-roseblush via-petal to-roseblush"></div>
+                    <div
+                        class="my-auto mx-auto px-4 py-0.5 rounded-full border border-candle/40 bg-black/30 font-hand text-xl text-candle tracking-wide">
+                        Happy Birthday <span class="her-name">Vamsi</span>
+                    </div>
+                    <div class="w-full h-1.5 bg-candle/50"></div>
+                </div>
+
+                <!-- Cake Stand -->
+                <div
+                    class="w-60 h-3 rounded-full bg-gradient-to-r from-[#a47843] via-[#fff1d6] to-[#a47843] shadow-[0_8px_25px_rgba(243,198,143,0.4)]">
+                </div>
+                <div class="w-24 h-4 bg-gradient-to-b from-[#d5ab77] to-[#7c5628] rounded-b-xl"></div>
+            </div>
+
+            <!-- Optional Mic Blow Trigger + Next Step -->
+            <div class="w-full flex flex-col items-center gap-2">
+                <button id="micBlowBtn" onclick="enableMicBlowDetection()"
+                    class="text-[11px] text-roseblush/80 underline underline-offset-4 hover:text-roseblush">
+                    🎙️ Or tap here to blow out with your microphone
+                </button>
+                <button id="screen4ContinueBtn" onclick="goToStage(5)"
+                    class="opacity-0 pointer-events-none translate-y-2 transition-all duration-500 w-full max-w-[280px] py-3.5 rounded-full bg-gradient-to-r from-roseblush via-candle to-roseblush text-wine font-semibold text-xs uppercase tracking-[0.2em] shadow-[0_0_25px_rgba(244,172,183,0.6)]">
+                    Open My Letter For You →
+                </button>
+            </div>
+        </section>
+
+        <!-- =============================================================
+             SCREEN 5: "A LETTER FROM KAVYA" (HANDWRITTEN CONFESSION)
+        ============================================================== -->
+        <section id="screen-5" class="screen-stage screen-hidden items-center">
+            <div class="w-full text-center">
+                <span
+                    class="inline-block px-3 py-0.5 rounded-full border border-roseblush/30 bg-roseblush/10 text-roseblush text-[10px] uppercase tracking-[0.22em] mb-1">
+                    04 • Honest & Unfiltered
+                </span>
+                <h2 class="font-serif text-3xl rose-gradient-text font-semibold">
+                    A Letter From My Heart
+                </h2>
+            </div>
+
+            <!-- Parchment / Velvet Scrollable Letter -->
+            <div
+                class="letter-scroll w-full flex-grow my-3 velvet-glass rounded-3xl p-5 sm:p-6 overflow-y-auto border border-roseblush/35 shadow-inner text-left relative">
+                <div class="flex items-center justify-between border-b border-roseblush/20 pb-3 mb-4">
+                    <h3 id="letterGreetingText" class="font-hand text-3xl text-candle">
+                        Hey Vamsi,
+                    </h3>
+                    <span class="text-roseblush text-lg">♥</span>
+                </div>
+
+                <!-- Letter Paragraphs -->
+                <div id="letterParagraphsContainer"
+                    class="space-y-3.5 text-[13.5px] sm:text-sm text-petal/90 font-light leading-relaxed">
+                    <!-- Injected via JS with gentle fade-in -->
+                </div>
+
+                <div class="mt-6 pt-4 border-t border-roseblush/20">
+                    <p class="text-[11px] uppercase tracking-[0.18em] text-roseblush/70">With all my love, always,
+                    </p>
+                    <p id="letterSignOffText" class="font-hand text-2xl text-candle mt-0.5">
+                        Kavya
+                    </p>
+                </div>
+            </div>
+
+            <button onclick="goToStage(6)"
+                class="w-full max-w-[280px] mx-auto py-3.5 rounded-full bg-gradient-to-r from-roseblush via-candle to-roseblush text-wine font-semibold text-xs uppercase tracking-[0.2em] shadow-[0_0_25px_rgba(244,172,183,0.45)] active:scale-95 transition-all">
+                One Last Small Promise →
+            </button>
+        </section>
+
+        <!-- =============================================================
+             SCREEN 6: "OUR NEXT CHAPTER" (KEEPSAKE & HOSTING GUIDE)
+        ============================================================== -->
+        <section id="screen-6" class="screen-stage screen-hidden items-center text-center">
+            <div class="my-auto w-full flex flex-col items-center">
+                <div
+                    class="w-16 h-16 rounded-full velvet-glass border border-roseblush/40 flex items-center justify-center mb-4 shadow-[0_0_30px_rgba(244,172,183,0.3)]">
+                    <span class="text-2xl">🌹</span>
+                </div>
+
+                <span class="text-[10px] uppercase tracking-[0.25em] text-roseblush/80 mb-1">
+                    Happy Birthday, <span class="her-name">Vamsi</span>
+                </span>
+                <h2 class="font-serif text-3xl sm:text-4xl rose-gradient-text font-semibold mb-3">
+                    To Many More Years
+                </h2>
+
+                <div
+                    class="velvet-glass rounded-3xl p-5 border border-roseblush/30 max-w-[340px] mb-5 text-xs sm:text-[13px] text-petal/85 font-light leading-relaxed space-y-2.5">
+                    <p>
+                        Four years down, and so many beautiful moments still ahead. Whatever life brings, I want us to keep growing, laughing, and standing by each other.
+                    </p>
+                    <p class="text-candle font-serif italic text-base">
+                        "I will keep choosing you, celebrating you, and loving you through every chapter. Here is to us and all the years still to come."
+                    </p>
+                </div>
+
+                <!-- Interactive Keep a Smile Button -->
+                <button id="keepSmileBtn" onclick="sendHeartBurst()"
+                    class="w-full max-w-[270px] py-3.5 rounded-full bg-gradient-to-r from-roseblush via-candle to-roseblush text-wine font-semibold text-xs uppercase tracking-[0.2em] shadow-[0_0_25px_rgba(244,172,183,0.5)] active:scale-95 transition-all mb-3">
+                    Tap If This Made You Smile ♥
+                </button>
+
+                <div id="smileFeedbackToast"
+                    class="hidden px-4 py-2.5 rounded-2xl bg-roseblush/15 border border-roseblush/40 text-xs text-petal max-w-[300px] mb-3">
+                    ✨ I hope this little surprise made you smile. Happy Birthday, Vamsi! I love you.
+                </div>
+
+                <div class="flex items-center gap-4 mt-1">
+                    <button onclick="replayAll()"
+                        class="text-xs uppercase tracking-[0.18em] text-petal/70 hover:text-petal underline underline-offset-4">
+                        Replay From Start ↻
+                    </button>
+                </div>
+            </div>
+    </div>
+    </section>
+
+    <!-- =============================================================
+             MODAL: FREE SAFE HOSTING GUIDE FOR SENDER
+        ============================================================== -->
+    <div id="hostingModal"
+        class="hidden absolute inset-0 z-50 bg-black/85 backdrop-blur-md p-5 flex flex-col justify-center items-center text-left">
+        <div
+            class="velvet-glass rounded-3xl p-5 border border-roseblush/40 w-full max-h-[85dvh] overflow-y-auto space-y-3 text-xs text-petal/90">
+            <div class="flex justify-between items-center border-b border-roseblush/20 pb-2">
+                <h3 class="font-serif text-xl text-candle font-semibold">How to Host & Send for Free (No Spam Link)</h3>
+                <button onclick="toggleHostingModal(false)" class="text-petal/70 text-lg px-2">✕</button>
+            </div>
+            <p class="text-petal/75 leading-relaxed">
+                To make sure the link looks <strong>100% genuine, private, and trustworthy</strong> on WhatsApp or
+                Instagram (like <code>for-vamsi.netlify.app</code>), follow these 3 steps (takes 60 seconds, 100%
+                free):
+            </p>
+            <ol class="list-decimal list-inside space-y-2.5 text-petal/90">
+                <li>
+                    <strong>Save this file:</strong> Save this code on your computer or phone as
+                    <code>index.html</code>. (Before saving, you can delete the "Creator Tip" button at the bottom of
+                    Screen 6 if you want!)
+                </li>
+                <li>
+                    <strong>Use Netlify Drop (Best & Cleanest):</strong> Go to <strong>app.netlify.com/drop</strong> on
+                    your browser. Drag and drop your <code>index.html</code> file (or a folder containing `index.html`).
+                </li>
+                <li>
+                    <strong>Customize the Link Name:</strong> In Netlify, click <em>Site Settings → Change site
+                        name</em> and type <code>happy-birthday-vamsi</code>. Your link becomes
+                    <strong>https://happy-birthday-vamsi.netlify.app</strong> — SSL secured (`https`), zero ads, and
+                    never looks like spam!
+                </li>
+            </ol>
+            <button onclick="toggleHostingModal(false)"
+                class="w-full py-2.5 mt-2 rounded-full bg-roseblush text-wine font-semibold uppercase tracking-wider text-xs">
+                Got It, Close Guide
+            </button>
+        </div>
+    </div>
+
+    </div>
+
+    <!-- =================================================================
+         INTERACTION, WEB AUDIO HEARTBEAT/PIANO & PARTICLE PHYSICS
+    ================================================================== -->
+    <script>
+        let currentStage = 1;
+        let maxUnlockedStage = 1;
+        let topPolaroidIndex = 0;
+        let bloomedRoses = new Set();
+        let candleExtinguished = false;
+
+        window.addEventListener('DOMContentLoaded', () => {
+            hydrateTextFromConfig();
+            initHeartHoldLock();
+            renderPolaroidStack();
+            renderRoseLanterns();
+            renderLetterContent();
+            initFlameSwipeGesture();
+            initRomanticEmberCanvas();
+        });
+
+        function hydrateTextFromConfig() {
+            document.querySelectorAll('.her-name').forEach(el => {
+                el.textContent = VAMSI_CONFIG.herName;
+            });
+            document.getElementById('letterGreetingText').textContent = VAMSI_CONFIG.letterGreeting;
+            document.getElementById('letterSignOffText').textContent = VAMSI_CONFIG.yourSignOff;
+        }
+
+        /* -----------------------------------------------------------
+           STAGE NAVIGATION & STORY BARS
+        ----------------------------------------------------------- */
+        function goToStage(stageNum) {
+            if (stageNum < 1 || stageNum > 6) return;
+
+            playPianoNote(523.25 + stageNum * 45, 1.6, 0.06);
+
+            for (let i = 1; i <= 6; i++) {
+                const section = document.getElementById(`screen-${i}`);
+                const bar = document.getElementById(`bar-${i}`);
+                if (i === stageNum) {
+                    section.classList.remove('screen-hidden');
+                    section.classList.add('screen-active');
+                } else {
+                    section.classList.remove('screen-active');
+                    section.classList.add('screen-hidden');
+                }
+
+                if (bar) {
+                    bar.style.width = i <= stageNum ? '100%' : '0%';
+                }
+            }
+
+            currentStage = stageNum;
+            if (stageNum > maxUnlockedStage) maxUnlockedStage = stageNum;
+        }
+
+        function jumpStageIfUnlocked(stageNum) {
+            if (stageNum <= maxUnlockedStage) {
+                goToStage(stageNum);
+            }
+        }
+
+        /* -----------------------------------------------------------
+           WEB AUDIO API: HEARTBEAT THUMP + WARM ROMANTIC PIANO
+        ----------------------------------------------------------- */
+        let audioCtx = null;
+        let pianoPlaying = false;
+        let pianoTimer = null;
+
+        function getAudioContext() {
+            if (!audioCtx) {
+                const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                if (AudioCtx) audioCtx = new AudioCtx();
+            }
+            if (audioCtx && audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            return audioCtx;
+        }
+
+        // Warm low heartbeat thud
+        function playHeartbeatPulse() {
+            try {
+                const ctx = getAudioContext();
+                if (!ctx) return;
+                const now = ctx.currentTime;
+
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(68, now);
+                osc.frequency.exponentialRampToValueAtTime(36, now + 0.18);
+
+                gain.gain.setValueAtTime(0.001, now);
+                gain.gain.linearRampToValueAtTime(0.22, now + 0.03);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start(now);
+                osc.stop(now + 0.24);
+            } catch (e) { }
+        }
+
+        // Warm Romantic Electric Piano / Music Box Note
+        function playPianoNote(freq = 440, duration = 2.2, vol = 0.065) {
+            try {
+                const ctx = getAudioContext();
+                if (!ctx) return;
+                const now = ctx.currentTime;
+
+                const osc1 = ctx.createOscillator();
+                const osc2 = ctx.createOscillator();
+                const gain = ctx.createGain();
+
+                osc1.type = 'sine';
+                osc1.frequency.setValueAtTime(freq, now);
+
+                osc2.type = 'triangle';
+                osc2.frequency.setValueAtTime(freq * 2, now);
+
+                const overtoneGain = ctx.createGain();
+                overtoneGain.gain.setValueAtTime(vol * 0.2, now);
+                overtoneGain.gain.exponentialRampToValueAtTime(0.0001, now + duration * 0.6);
+
+                gain.gain.setValueAtTime(0.001, now);
+                gain.gain.linearRampToValueAtTime(vol, now + 0.04);
+                gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+
+                osc1.connect(gain);
+                osc2.connect(overtoneGain);
+                overtoneGain.connect(gain);
+                gain.connect(ctx.destination);
+
+                osc1.start(now);
+                osc2.start(now);
+                osc1.stop(now + duration);
+                osc2.stop(now + duration);
+            } catch (e) { }
+        }
+
+        function playRomanticChord() {
+            const chord = [392.00, 493.88, 587.33, 783.99, 987.77]; // G Major 7 warm voicing
+            chord.forEach((n, idx) => {
+                setTimeout(() => playPianoNote(n, 2.5, 0.055), idx * 85);
+            });
+        }
+
+        // Romantic Arpeggio Melody Loop
+        const romanticNotes = [
+            392.00, 493.88, 587.33, 783.99, 659.25, 587.33,
+            349.23, 440.00, 523.25, 698.46, 659.25, 523.25,
+            392.00, 392.00, 440.00, 392.00, 523.25, 493.88,
+            392.00, 392.00, 440.00, 392.00, 587.33, 523.25
+        ];
+        let noteIdx = 0;
+
+        function startRomanticPiano() {
+            if (pianoPlaying) return;
+            getAudioContext();
+            pianoPlaying = true;
+            updateAudioPillUI();
+
+            playPianoNote(romanticNotes[0], 2.4, 0.06);
+            noteIdx = 1;
+
+            pianoTimer = setInterval(() => {
+                if (!pianoPlaying) return;
+                const n = romanticNotes[noteIdx % romanticNotes.length];
+                playPianoNote(n, 2.5, 0.055);
+                if (noteIdx % 4 === 0) {
+                    playPianoNote(n / 2, 3.2, 0.035);
+                }
+                noteIdx++;
+            }, 920);
+        }
+
+        function stopRomanticPiano() {
+            pianoPlaying = false;
+            if (pianoTimer) clearInterval(pianoTimer);
+            updateAudioPillUI();
+        }
+
+        function toggleRomanticPiano() {
+            if (pianoPlaying) stopRomanticPiano();
+            else startRomanticPiano();
+        }
+
+        function updateAudioPillUI() {
+            document.getElementById('audioEmoji').textContent = pianoPlaying ? '🎹' : '🔇';
+            document.getElementById('audioLabel').textContent = pianoPlaying ? 'Melody On' : 'Melody Off';
+        }
+
+        /* -----------------------------------------------------------
+           SCREEN 1: PRESS & HOLD HEARTBEAT LOCK
+        ----------------------------------------------------------- */
+        function initHeartHoldLock() {
+            const btn = document.getElementById('heartHoldBtn');
+            const circle = document.getElementById('holdProgressCircle');
+            const pctText = document.getElementById('holdPercentText');
+            const label = document.getElementById('holdStatusLabel');
+
+            let holdProgress = 0;
+            let holdTimer = null;
+            let pulseSoundTimer = null;
+            let unlocked = false;
+            const totalCircumference = 339.29;
+
+            function startHolding(e) {
+                if (e.cancelable) e.preventDefault();
+                if (unlocked) return;
+
+                btn.classList.remove('heartbeat-idle');
+                btn.classList.add('heartbeat-holding');
+                label.textContent = "Listening to the heartbeat...";
+
+                playHeartbeatPulse();
+                pulseSoundTimer = setInterval(playHeartbeatPulse, 520);
+
+                holdTimer = setInterval(() => {
+                    holdProgress += 2.5;
+                    if (holdProgress > 100) holdProgress = 100;
+
+                    const offset = totalCircumference - (holdProgress / 100) * totalCircumference;
+                    circle.style.strokeDashoffset = offset;
+                    pctText.textContent = `${Math.floor(holdProgress)}%`;
+
+                    if (holdProgress >= 100 && !unlocked) {
+                        completeUnlock();
+                    }
+                }, 45);
+            }
+
+            function stopHolding() {
+                if (unlocked) return;
+                clearInterval(holdTimer);
+                clearInterval(pulseSoundTimer);
+                btn.classList.remove('heartbeat-holding');
+                btn.classList.add('heartbeat-idle');
+
+                // Smooth decay back if released early
+                const decay = setInterval(() => {
+                    if (holdProgress <= 0 || unlocked) {
+                        clearInterval(decay);
+                        pctText.textContent = "HOLD";
+                        label.textContent = "Press & Hold the Heart for 2 Seconds";
+                        return;
+                    }
+                    holdProgress = Math.max(0, holdProgress - 8);
+                    circle.style.strokeDashoffset = totalCircumference - (holdProgress / 100) * totalCircumference;
+                }, 30);
+            }
+
+            function completeUnlock() {
+                unlocked = true;
+                clearInterval(holdTimer);
+                clearInterval(pulseSoundTimer);
+                pctText.textContent = "OPEN";
+                label.textContent = "Unlocked for Vamsi ♥";
+
+                startRomanticPiano();
+                playRomanticChord();
+
+                if (typeof confetti === 'function') {
+                    confetti({
+                        particleCount: 45,
+                        spread: 65,
+                        origin: { y: 0.55 },
+                        colors: ['#F4ACB7', '#FFE5EC', '#F3C68F']
+                    });
+                }
+
+                setTimeout(() => goToStage(2), 900);
+            }
+
+            btn.addEventListener('mousedown', startHolding);
+            btn.addEventListener('touchstart', startHolding, { passive: false });
+            window.addEventListener('mouseup', stopHolding);
+            window.addEventListener('touchend', stopHolding);
+            btn.addEventListener('dblclick', completeUnlock);
+        }
+
+        /* -----------------------------------------------------------
+           SCREEN 2: SWIPEABLE / TAPPABLE POLAROID OBSERVATION CARDS
+        ----------------------------------------------------------- */
+        function renderPolaroidStack() {
+            const container = document.getElementById('polaroidStack');
+            if (!container) return;
+            container.innerHTML = '';
+            topPolaroidIndex = 0;
+
+            const cards = VAMSI_CONFIG.polaroids;
+            cards.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.id = `polaroid-${index}`;
+                const rotation = index === 0 ? 0 : (index % 2 === 0 ? -3.5 : 3.5);
+                const yOffset = index * 6;
+                const scale = 1 - index * 0.03;
+
+                card.style.zIndex = cards.length - index;
+                card.style.transform = `translateY(${yOffset}px) rotate(${rotation}deg) scale(${scale})`;
+
+                card.className = "polaroid-card velvet-glass rounded-3xl p-6 border border-roseblush/40 shadow-2xl cursor-pointer select-none flex flex-col justify-between h-[320px] text-left";
+                card.onclick = () => dismissTopPolaroid();
+
+                card.innerHTML = `
+                    <div class="flex items-center justify-between border-b border-roseblush/20 pb-3">
+                        <span class="text-[10px] uppercase tracking-[0.24em] text-roseblush font-semibold">${item.tag}</span>
+                        <span class="text-candle text-sm">✦</span>
+                    </div>
+
+                    <div class="my-auto py-2">
+                        <h3 class="font-serif text-2xl text-candle font-semibold mb-3">${item.caption}</h3>
+                        <p class="text-sm sm:text-[15px] text-petal/90 font-light leading-relaxed">
+                            "${item.body}"
+                        </p>
+                    </div>
+
+                    <div class="flex items-center justify-between pt-3 border-t border-roseblush/15 text-[11px] text-petal/50">
+                        <span class="font-hand text-base text-roseblush">For Vamsi</span>
+                        <span>Tap card to flip →</span>
+                    </div>
+                `;
+
+                container.appendChild(card);
+            });
+
+            document.getElementById('polaroidCounter').textContent = `1 / ${cards.length}`;
+            document.getElementById('tapNextCardBtn').classList.remove('hidden');
+            document.getElementById('screen2ContinueBtn').classList.add('hidden');
+        }
+
+        function dismissTopPolaroid() {
+            const cards = VAMSI_CONFIG.polaroids;
+            if (topPolaroidIndex >= cards.length) return;
+
+            const currentCard = document.getElementById(`polaroid-${topPolaroidIndex}`);
+            if (currentCard) {
+                const dirClass = topPolaroidIndex % 2 === 0 ? 'polaroid-dismissed-left' : 'polaroid-dismissed-right';
+                currentCard.classList.add(dirClass);
+            }
+
+            playPianoNote(587.33 + topPolaroidIndex * 65, 1.5, 0.06);
+            topPolaroidIndex++;
+
+            // Straighten the new top card
+            if (topPolaroidIndex < cards.length) {
+                const nextCard = document.getElementById(`polaroid-${topPolaroidIndex}`);
+                if (nextCard) {
+                    nextCard.style.transform = `translateY(0px) rotate(0deg) scale(1)`;
+                }
+                document.getElementById('polaroidCounter').textContent = `${topPolaroidIndex + 1} / ${cards.length}`;
+            } else {
+                // All cards read—reveal continue button and option to restack
+                document.getElementById('tapNextCardBtn').classList.add('hidden');
+                const contBtn = document.getElementById('screen2ContinueBtn');
+                contBtn.classList.remove('hidden');
+                playRomanticChord();
+            }
+        }
+
+        /* -----------------------------------------------------------
+           SCREEN 3: BLOOMING ROSE LANTERNS
+        ----------------------------------------------------------- */
+        let orderedRoses = [];
+
+        function renderRoseLanterns() {
+            const layer = document.getElementById('roseNodesLayer');
+            const svg = document.getElementById('roseLinesSvg');
+            if (!layer || !svg) return;
+
+            layer.innerHTML = '';
+            svg.innerHTML = '';
+            bloomedRoses.clear();
+            orderedRoses = [];
+
+            VAMSI_CONFIG.roses.forEach((rose, idx) => {
+                const btn = document.createElement('button');
+                btn.id = `rose-node-${idx}`;
+                btn.style.left = `${rose.x}%`;
+                btn.style.top = `${rose.y}%`;
+                btn.style.animationDelay = `${idx * 0.4}s`;
+                btn.className = "rose-lantern absolute -translate-x-1/2 -translate-y-1/2 w-14 h-14 rounded-full velvet-glass border border-roseblush/40 flex flex-col items-center justify-center shadow-[0_0_20px_rgba(244,172,183,0.25)] focus:outline-none";
+
+                btn.innerHTML = `
+                    <span id="rose-icon-${idx}" class="text-xl transition-transform duration-300">🌷</span>
+                    <span class="text-[9px] tracking-widest text-candle/80 mt-0.5">${idx + 1}</span>
+                `;
+
+                btn.onclick = () => bloomRoseLantern(idx);
+                layer.appendChild(btn);
+            });
+        }
+
+        function bloomRoseLantern(idx) {
+            const rose = VAMSI_CONFIG.roses[idx];
+            const btn = document.getElementById(`rose-node-${idx}`);
+            const icon = document.getElementById(`rose-icon-${idx}`);
+
+            const notes = [523.25, 587.33, 659.25, 783.99, 987.77];
+            playPianoNote(notes[idx % notes.length], 2.0, 0.07);
+
+            document.getElementById('roseTitleSlot').textContent = `🌹 ${rose.title}`;
+            document.getElementById('roseNoteSlot').textContent = `"${rose.note}"`;
+
+            if (!bloomedRoses.has(idx)) {
+                bloomedRoses.add(idx);
+                orderedRoses.push(idx);
+
+                btn.classList.add('bloomed', 'border-candle');
+                if (icon) icon.textContent = '🌹';
+
+                if (orderedRoses.length > 1) {
+                    const prev = VAMSI_CONFIG.roses[orderedRoses[orderedRoses.length - 2]];
+                    drawGoldenThread(prev.x, prev.y, rose.x, rose.y);
+                }
+
+                document.getElementById('roseCountLabel').textContent = `${bloomedRoses.size}/5`;
+
+                if (bloomedRoses.size === VAMSI_CONFIG.roses.length) {
+                    playRomanticChord();
+                    const contBtn = document.getElementById('screen3ContinueBtn');
+                    contBtn.textContent = "Make Your Birthday Wish →";
+                    contBtn.classList.remove('opacity-40', 'pointer-events-none');
+                    contBtn.classList.add('shadow-[0_0_25px_rgba(244,172,183,0.55)]');
+                }
+            }
+        }
+
+        function drawGoldenThread(x1, y1, x2, y2) {
+            const svg = document.getElementById('roseLinesSvg');
+            const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            line.setAttribute('x1', `${x1}%`);
+            line.setAttribute('y1', `${y1}%`);
+            line.setAttribute('x2', `${x2}%`);
+            line.setAttribute('y2', `${y2}%`);
+            line.setAttribute('stroke', '#F3C68F');
+            line.setAttribute('stroke-width', '1.5');
+            line.setAttribute('stroke-dasharray', '4,4');
+            line.setAttribute('class', 'opacity-70');
+            svg.appendChild(line);
+        }
+
+        /* -----------------------------------------------------------
+           SCREEN 4: INTERACTIVE BIRTHDAY CANDLE (SWIPE, TAP, OR MIC)
+        ----------------------------------------------------------- */
+        function initFlameSwipeGesture() {
+            const zone = document.getElementById('flameInteractiveZone');
+            if (!zone) return;
+            zone.addEventListener('touchmove', (e) => {
+                e.preventDefault();
+                extinguishBirthdayCandle();
+            }, { passive: false });
+        }
+
+        function extinguishBirthdayCandle() {
+            if (candleExtinguished) return;
+            candleExtinguished = true;
+
+            const flame = document.getElementById('theFlame');
+            const halo = document.getElementById('candleLightHalo');
+            const smoke = document.getElementById('smokeWrap');
+
+            flame.style.transform = 'scale(0)';
+            flame.style.opacity = '0';
+            halo.style.opacity = '0.15';
+            smoke.classList.add('smoke-go');
+
+            document.getElementById('wishHeader').innerHTML = `Happy Birthday, <span class="her-name">${VAMSI_CONFIG.herName}</span> ✨`;
+            document.getElementById('wishSubtext').textContent = "I hope every silent wish you just made comes true effortlessly this year.";
+            document.getElementById('micBlowBtn').classList.add('hidden');
+
+            playRomanticChord();
+            showerRosePetals();
+
+            setTimeout(() => {
+                const btn = document.getElementById('screen4ContinueBtn');
+                btn.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-2');
+                btn.classList.add('opacity-100', 'translate-y-0');
+            }, 700);
+        }
+
+        async function enableMicBlowDetection() {
+            const micBtn = document.getElementById('micBlowBtn');
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                micBtn.textContent = "🌬️ Blow gently into your phone mic now...";
+                const ctx = getAudioContext();
+                const source = ctx.createMediaStreamSource(stream);
+                const analyser = ctx.createAnalyser();
+                analyser.fftSize = 256;
+                source.connect(analyser);
+                const data = new Uint8Array(analyser.frequencyBinCount);
+
+                function checkBlow() {
+                    if (candleExtinguished) {
+                        stream.getTracks().forEach(t => t.stop());
+                        return;
+                    }
+                    analyser.getByteFrequencyData(data);
+                    let sum = 0;
+                    for (let i = 0; i < 30; i++) sum += data[i];
+                    if (sum / 30 > 85) {
+                        stream.getTracks().forEach(t => t.stop());
+                        extinguishBirthdayCandle();
+                    } else {
+                        requestAnimationFrame(checkBlow);
+                    }
+                }
+                checkBlow();
+            } catch (err) {
+                micBtn.textContent = "Tap the golden flame directly to blow it out ✨";
+            }
+        }
+
+        function showerRosePetals() {
+            if (typeof confetti !== 'function') return;
+            const colors = ['#F4ACB7', '#FFE5EC', '#F3C68F', '#E05780'];
+            confetti({
+                particleCount: 80,
+                spread: 80,
+                origin: { y: 0.55 },
+                colors: colors
+            });
+            setTimeout(() => {
+                confetti({ particleCount: 45, angle: 60, spread: 55, origin: { x: 0, y: 0.65 }, colors });
+                confetti({ particleCount: 45, angle: 120, spread: 55, origin: { x: 1, y: 0.65 }, colors });
+            }, 300);
+        }
+
+        /* -----------------------------------------------------------
+           SCREEN 5 & 6: LETTER & SMILE KEEPSAKE
+        ----------------------------------------------------------- */
+        function renderLetterContent() {
+            const box = document.getElementById('letterParagraphsContainer');
+            if (!box) return;
+            box.innerHTML = VAMSI_CONFIG.letterParagraphs
+                .map(p => `<p class="leading-relaxed">${p}</p>`)
+                .join('');
+        }
+
+        function sendHeartBurst() {
+            playRomanticChord();
+            showerRosePetals();
+            document.getElementById('smileFeedbackToast').classList.remove('hidden');
+            const btn = document.getElementById('keepSmileBtn');
+            btn.textContent = "Smile Saved Forever ♥";
+        }
+
+        function toggleHostingModal(show) {
+            const modal = document.getElementById('hostingModal');
+            if (show) modal.classList.remove('hidden');
+            else modal.classList.add('hidden');
+        }
+
+        function replayAll() {
+            candleExtinguished = false;
+            document.getElementById('theFlame').style.transform = '';
+            document.getElementById('theFlame').style.opacity = '1';
+            document.getElementById('candleLightHalo').style.opacity = '1';
+            document.getElementById('smokeWrap').classList.remove('smoke-go');
+            document.getElementById('screen4ContinueBtn').classList.add('opacity-0', 'pointer-events-none', 'translate-y-2');
+            document.getElementById('micBlowBtn').classList.remove('hidden');
+            document.getElementById('micBlowBtn').textContent = "🎙️ Or tap here to blow out with your microphone";
+
+            renderPolaroidStack();
+            renderRoseLanterns();
+            document.getElementById('roseCountLabel').textContent = '0/5';
+            document.getElementById('screen3ContinueBtn').textContent = 'Bloom All 5 Roses First';
+            document.getElementById('screen3ContinueBtn').classList.add('opacity-40', 'pointer-events-none');
+
+            goToStage(1);
+        }
+
+        /* -----------------------------------------------------------
+           BACKGROUND FLOATING HEART EMBERS & BOKEH CANVAS
+        ----------------------------------------------------------- */
+        function initRomanticEmberCanvas() {
+            const canvas = document.getElementById('emberCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+
+            let w = canvas.width = canvas.parentElement.clientWidth;
+            let h = canvas.height = canvas.parentElement.clientHeight;
+
+            window.addEventListener('resize', () => {
+                w = canvas.width = canvas.parentElement.clientWidth;
+                h = canvas.height = canvas.parentElement.clientHeight;
+            });
+
+            const embers = Array.from({ length: 38 }, () => ({
+                x: Math.random() * w,
+                y: Math.random() * h,
+                size: Math.random() * 2.5 + 1,
+                vx: (Math.random() - 0.5) * 0.25,
+                vy: -Math.random() * 0.45 - 0.12,
+                alpha: Math.random() * 0.55 + 0.15,
+                isHeart: Math.random() > 0.65,
+                color: Math.random() > 0.4 ? '244, 172, 183' : '243, 198, 143'
+            }));
+
+            function draw() {
+                ctx.clearRect(0, 0, w, h);
+                for (const p of embers) {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    if (p.y < -15) p.y = h + 15;
+                    if (p.x < -15) p.x = w + 15;
+                    if (p.x > w + 15) p.x = -15;
+
+                    ctx.save();
+                    ctx.fillStyle = `rgba(${p.color}, ${p.alpha})`;
+                    ctx.shadowBlur = 10;
+                    ctx.shadowColor = `rgba(${p.color}, 0.6)`;
+
+                    if (p.isHeart) {
+                        ctx.font = `${Math.floor(p.size * 5)}px serif`;
+                        ctx.fillText('♥', p.x, p.y);
+                    } else {
+                        ctx.beginPath();
+                        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                    ctx.restore();
+                }
+                requestAnimationFrame(draw);
+            }
+            draw();
+        }
+    </script>
+</body>
+
+</html>
